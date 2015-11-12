@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Google Map: Water only</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      } 
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <div id="info-box">?</div>
+    <script>
+
+var map;
+function initMap() {
+  map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 15,
+    center: {lat: 40.69732349671861, lng: -74.00226998329163}
+  });
+
+  map.set('styles', [
+  {
+    "stylers": [
+      { "visibility": "off" }
+    ]
+  },{
+    "featureType": "water",
+    "stylers": [
+      { "visibility": "on" }
+    ]
+  },{
+  }
+]);
+
+}
+
+
+
+
+    </script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?callback=initMap"></script>
+  </body>
+</html>
