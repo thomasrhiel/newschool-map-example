@@ -13,25 +13,96 @@
       #map {
         height: 100%;
       }
+      #info-box {
+        background-color: white;
+        border: 1px solid black;
+        top: 30px;
+        height: 20px;
+        padding: 10px;
+        position: absolute;
+        right: 30px;
+      }      
     </style>
   </head>
   <body>
     <div id="map"></div>
+    <div id="info-box">?</div>
     <script>
 
 var map;
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 4,
-    center: {lat: -28, lng: 137}
+    zoom: 15,
+    center: {lat: 40.69732349671861, lng: -74.00226998329163}
   });
 
   // NOTE: This uses cross-domain XHR, and may not work on older browsers.
-  map.data.loadGeoJson('https://storage.googleapis.com/maps-devrel/google.json');
+  map.data.loadGeoJson('http://thomasrhiel.github.io/newschool-map-example/test.json', null, function(hello) {
+
+  	for (var i = 0; i < hello.length; i++) {
+  		var feature = hello[i];
+
+  		feature.forEachProperty(function(prop) {
+  			if (prop > 2000) {
+  				  map.data.overrideStyle(feature, {
+				    fillColor: '#a02526' 				  	
+  				  });
+  			} else if (prop > 1975) {
+  				  map.data.overrideStyle(feature, {
+				    fillColor: '#C94034' 				  	
+  				  });
+  			} else if (prop > 1950) {
+  				  map.data.overrideStyle(feature, {
+				    fillColor: '#f15b41' 				  	
+  				  });
+  			} else if (prop >= 1925) {
+  				  map.data.overrideStyle(feature, {
+				    fillColor: '#F1984A' 				  	
+  				  });
+  			} else if (prop >= 1900) {
+  				  map.data.overrideStyle(feature, {
+				    fillColor: '#f1d452' 				  	
+  				  });
+  			} else if (prop >= 1875) {
+  				  map.data.overrideStyle(feature, {
+				    fillColor: '#B8C14A' 				  	
+  				  });
+  			} else if (prop >= 1850) {
+  				  map.data.overrideStyle(feature, {
+				    fillColor: '#7ead41' 				  	
+  				  });
+  			} else if (prop >= 1825) {
+  				  map.data.overrideStyle(feature, {
+				    fillColor: '#499675' 				  	
+  				  });
+  			} else {
+  				  map.data.overrideStyle(feature, {
+				    fillColor: '#137ea9' 				  	
+  				  });
+  			}  			  			  			
+  		});
+  	}
+
+  });
+
+map.data.addListener('mouseover', function(event) {
+    document.getElementById('info-box').textContent =
+        event.feature.getProperty('yearbuilt');
+  });
+
+  // map.data.forEach(function(hello){console.log(hello);});
+
+  map.data.setStyle({
+    fillOpacity: 0.8,
+    strokeWeight: 0.5
+  });
+
+
 }
+
 
     </script>
     <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&signed_in=true&callback=initMap"></script>
+        src="https://maps.googleapis.com/maps/api/js?callback=initMap"></script>
   </body>
 </html>
